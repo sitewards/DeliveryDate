@@ -58,6 +58,53 @@
                 </sitewards_deliverydate>
             </updates>
         </layout>
+        <events>
+            <sales_quote_save_before>
+                <observers>
+                    <sitewards_deliverydate>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesQuoteSaveBefore</method>
+                    </sitewards_deliverydate>
+                </observers>
+            </sales_quote_save_before>
+            <sales_quote_save_after>
+                <observers>
+                    <sitewards_deliverydate>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesQuoteSaveAfter</method>
+                    </sitewards_deliverydate>
+                </observers>
+            </sales_quote_save_after>
+            <sales_quote_load_after>
+                <observers>
+                    <sitewards_deliverydate>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesQuoteLoadAfter</method>
+                    </sitewards_deliverydate>
+                </observers>
+            </sales_quote_load_after>
+            <sales_model_service_quote_submit_after>
+                <observers>
+                    <sales_model_service_quote_submit_after>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesModelServiceQuoteSubmitAfter</method>
+                    </sales_model_service_quote_submit_after>
+                </observers>
+            </sales_model_service_quote_submit_after>
+            <sales_order_load_after>
+                <observers>
+                    <sales_order_load_after>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesOrderLoadAfter</method>
+                    </sales_order_load_after>
+                </observers>
+            </sales_order_load_after>
+        </events>
     </frontend>
     <default>
         <deliverydate>
