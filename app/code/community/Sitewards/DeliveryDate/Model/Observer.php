@@ -23,14 +23,16 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesQuoteSaveBefore(Varien_Event_Observer $oObserver)
     {
-        $oQuote = $oObserver->getQuote();
-        $aPost = Mage::app()
-            ->getFrontController()
-            ->getRequest()
-            ->getPost();
-        if (isset($aPost['sitewards']['delivery_date'])) {
-            $sVar = $aPost['sitewards']['delivery_date'];
-            $oQuote->setDeliveryDate($sVar);
+        if ($this->isExtensionActive()) {
+            $oQuote = $oObserver->getQuote();
+            $aPost = Mage::app()
+                ->getFrontController()
+                ->getRequest()
+                ->getPost();
+            if (isset($aPost['sitewards']['delivery_date'])) {
+                $sVar = $aPost['sitewards']['delivery_date'];
+                $oQuote->setDeliveryDate($sVar);
+            }
         }
     }
 
@@ -43,17 +45,19 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesQuoteSaveAfter(Varien_Event_Observer $oObserver)
     {
-        $oQuote = $oObserver->getQuote();
-        if ($oQuote->getDeliveryDate()) {
-            $sVar = $oQuote->getDeliveryDate();
-            if (!empty($sVar)) {
-                /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
-                $oModel = Mage::getModel('sitewards_deliverydate/quote');
-                $oModel->deleteByQuote($oQuote->getId(), 'delivery_date');
-                $oModel->setQuoteId($oQuote->getId());
-                $oModel->setKey('delivery_date');
-                $oModel->setValue($sVar);
-                $oModel->save();
+        if ($this->isExtensionActive()) {
+            $oQuote = $oObserver->getQuote();
+            if ($oQuote->getDeliveryDate()) {
+                $sVar = $oQuote->getDeliveryDate();
+                if (!empty($sVar)) {
+                    /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
+                    $oModel = Mage::getModel('sitewards_deliverydate/quote');
+                    $oModel->deleteByQuote($oQuote->getId(), 'delivery_date');
+                    $oModel->setQuoteId($oQuote->getId());
+                    $oModel->setKey('delivery_date');
+                    $oModel->setValue($sVar);
+                    $oModel->save();
+                }
             }
         }
     }
@@ -66,12 +70,14 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesQuoteLoadAfter(Varien_Event_Observer $oObserver)
     {
-        $oQuote = $oObserver->getQuote();
-        /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
-        $oModel = Mage::getModel('sitewards_deliverydate/quote');
-        $aData = $oModel->getByQuote($oQuote->getId());
-        foreach ($aData as $sKey => $sValue) {
-            $oQuote->setData($sKey, $sValue);
+        if ($this->isExtensionActive()) {
+            $oQuote = $oObserver->getQuote();
+            /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
+            $oModel = Mage::getModel('sitewards_deliverydate/quote');
+            $aData = $oModel->getByQuote($oQuote->getId());
+            foreach ($aData as $sKey => $sValue) {
+                $oQuote->setData($sKey, $sValue);
+            }
         }
     }
 
@@ -83,19 +89,21 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesModelServiceQuoteSubmitAfter(Varien_Event_Observer $oObserver)
     {
-        $oOrder = $oObserver->getOrder();
-        $oQuote = $oObserver->getQuote();
-        if ($oQuote->getDeliveryDate()) {
-            $sVar = $oQuote->getDeliveryDate();
-            if (!empty($sVar)) {
-                /** @var Sitewards_DeliveryDate_Model_Order $oModel */
-                $oModel = Mage::getModel('sitewards_deliverydate/order');
-                $oModel->deleteByOrder($oOrder->getId(), 'delivery_date');
-                $oModel->setOrderId($oOrder->getId());
-                $oModel->setKey('delivery_date');
-                $oModel->setValue($sVar);
-                $oOrder->setDeliveryDate($sVar);
-                $oModel->save();
+        if ($this->isExtensionActive()) {
+            $oOrder = $oObserver->getOrder();
+            $oQuote = $oObserver->getQuote();
+            if ($oQuote->getDeliveryDate()) {
+                $sVar = $oQuote->getDeliveryDate();
+                if (!empty($sVar)) {
+                    /** @var Sitewards_DeliveryDate_Model_Order $oModel */
+                    $oModel = Mage::getModel('sitewards_deliverydate/order');
+                    $oModel->deleteByOrder($oOrder->getId(), 'delivery_date');
+                    $oModel->setOrderId($oOrder->getId());
+                    $oModel->setKey('delivery_date');
+                    $oModel->setValue($sVar);
+                    $oOrder->setDeliveryDate($sVar);
+                    $oModel->save();
+                }
             }
         }
     }
@@ -108,12 +116,23 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesOrderLoadAfter(Varien_Event_Observer $oObserver)
     {
-        $oOrder = $oObserver->getOrder();
-        /** @var Sitewards_DeliveryDate_Model_Order $oModel */
-        $oModel = Mage::getModel('sitewards_deliverydate/order');
-        $aData = $oModel->getByOrder($oOrder->getId());
-        foreach ($aData as $sKey => $sValue) {
-            $oOrder->setData($sKey, $sValue);
+        if ($this->isExtensionActive()) {
+            $oOrder = $oObserver->getOrder();
+            /** @var Sitewards_DeliveryDate_Model_Order $oModel */
+            $oModel = Mage::getModel('sitewards_deliverydate/order');
+            $aData = $oModel->getByOrder($oOrder->getId());
+            foreach ($aData as $sKey => $sValue) {
+                $oOrder->setData($sKey, $sValue);
+            }
         }
+    }
+
+    /**
+     * Check to see if the extension is active before doing anything
+     *
+     * @return bool
+     */
+    protected function isExtensionActive() {
+        return Mage::helper('sitewards/deliverydate')->isExtensionActive();
     }
 }
