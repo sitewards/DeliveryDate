@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * layout.xml
+ *  - using the form.additional.info add the new field to the checkout page
+ *
+ * @category    Sitewards
+ * @package     Sitewards_DeliveryDate
+ * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
+ */
+-->
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.shipping_method.additional">
+            <action method="setTemplate">
+                <template>sitewards/deliverydate/onepage/shipping_method/additional.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <reference name="head">
+                <action method="addItem">
+                    <type>js_css</type>
+                    <name>calendar/calendar-system.css</name>
+                    <!--<params/><if/><condition>can_load_calendar_js</condition>-->
+                </action>
+                <action method="addItem">
+                    <type>js</type>
+                    <name>calendar/calendar.js</name>
+                    <!--<params/><if/><condition>can_load_calendar_js</condition>-->
+                </action>
+                <action method="addItem">
+                    <type>js</type>
+                    <name>calendar/calendar-setup.js</name>
+                    <!--<params/><if/><condition>can_load_calendar_js</condition>-->
+                </action>
+                <action method="addItem">
+                    <type>js</type>
+                    <name>sitewards/deliverydate.js</name>
+                    <!--<params/><if/><condition>can_load_calendar_js</condition>-->
+                </action>
+            </reference>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_onepage_additional>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>sitewards/deliverydate/onepage/shipping_method/additional.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_additional>
+</layout>

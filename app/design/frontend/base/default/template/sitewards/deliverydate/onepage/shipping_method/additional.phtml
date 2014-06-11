@@ -1,0 +1,34 @@
+<?php if (!$this->getQuote()->isVirtual()): ?>
+    <?php echo $this->helper('giftmessage/message')->getInline(
+        'onepage_checkout',
+        $this->getQuote(),
+        $this->getDontDisplayContainer()
+    ) ?>
+<?php endif; ?>
+<?php
+/** @var Sitewards_DeliveryDate_Helper_Data $oDeliveryDate */
+$oDeliveryDate = $this->helper('sitewards_deliverydate');
+?>
+<?php if ($this->helper('sitewards_deliverydate')->isExtensionActive()) : ?>
+    <ul>
+        <li class="fields">
+            <div class="field">
+                <label for="delivery_date"><?php echo $oDeliveryDate->__('Order Date') ?></label>
+
+                <div class="input-box">
+                    <input
+                        type="text"
+                        id="delivery_date"
+                        name="sitewards[delivery_date]"
+                        value="<?php echo $this->escapeHtml($this->getQuote()->getDeliveryDate()) ?>"
+                        title="<?php echo $oDeliveryDate->__('Order Date') ?>"
+                        class="input-text validate-date"/>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <script type="text/javascript">
+        var oOrderDatePicker = new OrderDatePicker();
+        oOrderDatePicker.initialize();
+    </script>
+<?php endif; ?>

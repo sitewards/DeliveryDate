@@ -6,6 +6,11 @@
         </Sitewards_DeliveryDate>
     </modules>
     <global>
+        <blocks>
+            <sitewards_deliverydate>
+                <class>Sitewards_DeliveryDate_Block</class>
+            </sitewards_deliverydate>
+        </blocks>
         <helpers>
             <sitewards_deliverydate>
                 <class>Sitewards_DeliveryDate_Helper</class>
@@ -36,6 +41,24 @@
             </deliverydate_setup>
         </resources>
     </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Sitewards_DeliveryDate>
+                    <files>
+                        <default>Sitewards_DeliveryDate.csv</default>
+                    </files>
+                </Sitewards_DeliveryDate>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <sitewards_deliverydate>
+                    <file>sitewards/deliverydate.xml</file>
+                </sitewards_deliverydate>
+            </updates>
+        </layout>
+    </frontend>
     <default>
         <deliverydate>
             <generalsettings>
