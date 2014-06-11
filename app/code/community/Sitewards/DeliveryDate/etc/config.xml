@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sitewards_DeliveryDate>
+            <version>0.1.0</version>
+        </Sitewards_DeliveryDate>
+    </modules>
+    <global>
+        <helpers>
+            <sitewards_deliverydate>
+                <class>Sitewards_DeliveryDate_Helper</class>
+            </sitewards_deliverydate>
+        </helpers>
+    </global>
+    <default>
+        <deliverydate>
+            <generalsettings>
+                <active>0</active>
+            </generalsettings>
+        </deliverydate>
+    </default>
+</config>

@@ -1,0 +1,19 @@
+{
+    "name": "sitewards/delivery_date",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "The Sitewards Delivery Date extends your webshop to add a delivery date to the order",
+    "homepage": "http://www.sitewards.com",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "1.*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ],
+	"extra": {
+		"magento-root-dir": "../magento/"
+	}
+}
