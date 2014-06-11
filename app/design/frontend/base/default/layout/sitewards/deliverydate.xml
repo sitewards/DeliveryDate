@@ -49,4 +49,52 @@
             </action>
         </reference>
     </checkout_onepage_additional>
+
+    <sales_order_view>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_order_view>
+
+    <sales_order_print>
+        <reference name="sales.order.print">
+            <action method="setTemplate">
+                <template>sitewards/deliverydate/sales/order/print.phtml</template>
+            </action>
+        </reference>
+    </sales_order_print>
+
+    <sales_order_invoice>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_order_invoice>
+
+    <sales_order_shipment>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_order_shipment>
+
+    <sales_order_creditmemo>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_order_creditmemo>
+
+    <sales_guest_view>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_guest_view>
+
+    <sales_guest_invoice>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_guest_invoice>
+
+    <sales_guest_shipment>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_guest_shipment>
+
+    <sales_guest_creditmemo>
+        <update handle="sitewards_displaydate_order_info"/>
+    </sales_guest_creditmemo>
+
+    <sitewards_displaydate_order_info>
+        <reference name="sales.order.info">
+            <action method="setTemplate">
+                <template>sitewards/deliverydate/sales/order/info.phtml</template>
+            </action>
+        </reference>
+    </sitewards_displaydate_order_info>
 </layout>

@@ -133,6 +133,6 @@ class Sitewards_DeliveryDate_Model_Observer
      * @return bool
      */
     protected function isExtensionActive() {
-        return Mage::helper('sitewards/deliverydate')->isExtensionActive();
+        return Mage::helper('sitewards_deliverydate')->isExtensionActive();
     }
 }
