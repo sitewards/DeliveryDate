@@ -11,6 +11,30 @@
                 <class>Sitewards_DeliveryDate_Helper</class>
             </sitewards_deliverydate>
         </helpers>
+        <models>
+            <sitewards_deliverydate>
+                <class>Sitewards_DeliveryDate_Model</class>
+                <resourceModel>sitewards_deliverydate_resource</resourceModel>
+            </sitewards_deliverydate>
+            <sitewards_deliverydate_resource>
+                <class>Sitewards_DeliveryDate_Model_Resource</class>
+                <entities>
+                    <quote>
+                        <table>sales_quote_deliverydate</table>
+                    </quote>
+                    <order>
+                        <table>sales_order_deliverydate</table>
+                    </order>
+                </entities>
+            </sitewards_deliverydate_resource>
+        </models>
+        <resources>
+            <deliverydate_setup>
+                <setup>
+                    <module>Sitewards_DeliveryDate</module>
+                </setup>
+            </deliverydate_setup>
+        </resources>
     </global>
     <default>
         <deliverydate>
