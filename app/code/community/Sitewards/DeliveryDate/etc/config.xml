@@ -19,4 +19,11 @@
             </generalsettings>
         </deliverydate>
     </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Sitewards_DeliveryDate/>
+            </modules>
+        </suite>
+    </phpunit>
 </config>
