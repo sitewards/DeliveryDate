@@ -35,7 +35,7 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate
      *
      * @param int $iQuoteId
      * @param string $sKey
-     * @return array
+     * @return string[]
      */
     public function getByQuote($iQuoteId, $sKey = '')
     {

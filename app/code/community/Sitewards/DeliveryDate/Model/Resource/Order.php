@@ -35,7 +35,7 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate
      *
      * @param int $iOrderId
      * @param string $sKey
-     * @return array
+     * @return string[]
      */
     public function getByOrder($iOrderId, $sKey = '')
     {

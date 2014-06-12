@@ -35,7 +35,7 @@ class Sitewards_DeliveryDate_Model_Quote extends Mage_Core_Model_Abstract
      *
      * @param int $iQuoteId
      * @param string $sKey
-     * @return array
+     * @return string[]
      */
     public function getByQuote($iQuoteId, $sKey = '')
     {
