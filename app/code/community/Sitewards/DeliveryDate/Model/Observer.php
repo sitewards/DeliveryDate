@@ -45,36 +45,16 @@ class Sitewards_DeliveryDate_Model_Observer
         if ($this->isExtensionActive()) {
             /** @var Mage_Sales_Model_Quote $oQuote */
             $oQuote = $oObserver->getQuote();
-            if ($oQuote->getDeliveryDate()) {
+            if ($this->hasDeliveryDate($oQuote)) {
                 $sDeliveryDate = $oQuote->getDeliveryDate();
-                if (!empty($sDeliveryDate)) {
-                    /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
-                    $oModel = Mage::getModel('sitewards_deliverydate/quote');
-                    $oModel->deleteByQuote($oQuote->getId(), 'delivery_date');
-                    $oModel->setQuoteId($oQuote->getId());
-                    $oModel->setKey('delivery_date');
-                    $oModel->setValue($sDeliveryDate);
-                    $oModel->save();
-                }
-            }
-        }
-    }
 
-    /**
-     * When load() function is called on the quote object,
-     * we read our custom fields value from database and put them back in quote object.
-     *
-     * @param Varien_Event_Observer $oObserver
-     */
-    public function salesQuoteLoadAfter(Varien_Event_Observer $oObserver)
-    {
-        if ($this->isExtensionActive()) {
-            $oQuote = $oObserver->getQuote();
-            /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
-            $oModel = Mage::getModel('sitewards_deliverydate/quote');
-            $aData = $oModel->getByQuote($oQuote->getId());
-            foreach ($aData as $sKey => $sValue) {
-                $oQuote->setData($sKey, $sValue);
+                /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
+                $oModel = Mage::getModel('sitewards_deliverydate/quote');
+                $oModel->deleteByQuote($oQuote->getId(), 'delivery_date');
+                $oModel->setQuoteId($oQuote->getId());
+                $oModel->setKey('delivery_date');
+                $oModel->setValue($sDeliveryDate);
+                $oModel->save();
             }
         }
     }
@@ -89,21 +69,37 @@ class Sitewards_DeliveryDate_Model_Observer
     {
         if ($this->isExtensionActive()) {
             $oQuote = $oObserver->getQuote();
-            if ($oQuote->getDeliveryDate()) {
+            if ($this->hasDeliveryDate($oQuote)) {
                 $sDeliveryDate = $oQuote->getDeliveryDate();
-                if (!empty($sDeliveryDate)) {
-                    $oOrder = $oObserver->getOrder();
+                $oOrder        = $oObserver->getOrder();
 
-                    /** @var Sitewards_DeliveryDate_Model_Order $oModel */
-                    $oModel = Mage::getModel('sitewards_deliverydate/order');
-                    $oModel->deleteByOrder($oOrder->getId(), 'delivery_date');
-                    $oModel->setOrderId($oOrder->getId());
-                    $oModel->setKey('delivery_date');
-                    $oModel->setValue($sDeliveryDate);
-                    $oOrder->setDeliveryDate($sDeliveryDate);
-                    $oModel->save();
-                }
+                /** @var Sitewards_DeliveryDate_Model_Order $oModel */
+                $oModel = Mage::getModel('sitewards_deliverydate/order');
+                $oModel->deleteByOrder($oOrder->getId(), 'delivery_date');
+                $oModel->setOrderId($oOrder->getId());
+                $oModel->setKey('delivery_date');
+                $oModel->setValue($sDeliveryDate);
+                $oOrder->setDeliveryDate($sDeliveryDate);
+                $oModel->save();
             }
+        }
+    }
+
+    /**
+     * When load() function is called on the quote object,
+     * we read our custom fields value from database and put them back in quote object.
+     *
+     * @param Varien_Event_Observer $oObserver
+     */
+    public function salesQuoteLoadAfter(Varien_Event_Observer $oObserver)
+    {
+        if ($this->isExtensionActive()) {
+            $oQuote = $oObserver->getQuote();
+
+            /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
+            $oModel = Mage::getModel('sitewards_deliverydate/quote');
+            $aData  = $oModel->getByQuote($oQuote->getId());
+            $this->addInformationToObject($aData, $oQuote);
         }
     }
 
@@ -117,12 +113,11 @@ class Sitewards_DeliveryDate_Model_Observer
     {
         if ($this->isExtensionActive()) {
             $oOrder = $oObserver->getOrder();
+
             /** @var Sitewards_DeliveryDate_Model_Order $oModel */
             $oModel = Mage::getModel('sitewards_deliverydate/order');
-            $aData = $oModel->getByOrder($oOrder->getId());
-            foreach ($aData as $sKey => $sValue) {
-                $oOrder->setData($sKey, $sValue);
-            }
+            $aData  = $oModel->getByOrder($oOrder->getId());
+            $this->addInformationToObject($aData, $oOrder);
         }
     }
 
@@ -134,5 +129,31 @@ class Sitewards_DeliveryDate_Model_Observer
     protected function isExtensionActive()
     {
         return Mage::helper('sitewards_deliverydate')->isExtensionActive();
+    }
+
+    /**
+     * Check to see if the quote has a delivery date set
+     *
+     * @param Mage_Sales_Model_Quote $oQuote
+     * @return bool
+     */
+    protected function hasDeliveryDate($oQuote)
+    {
+        $sDeliveryDate = $oQuote->getDeliveryDate();
+        return $sDeliveryDate !== null
+        || $sDeliveryDate !== '';
+    }
+
+    /**
+     * Given an array of data and an object set the values
+     *
+     * @param array $aData
+     * @param Mage_Sales_Model_Order|Mage_Sales_Model_Quote $oModel
+     */
+    protected function addInformationToObject($aData, $oModel)
+    {
+        foreach ($aData as $sKey => $sValue) {
+            $oModel->setData($sKey, $sValue);
+        }
     }
 }

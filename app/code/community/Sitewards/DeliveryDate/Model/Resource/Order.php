@@ -8,7 +8,7 @@
  * @package     Sitewards_DeliveryDate
  * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
  */
-class Sitewards_DeliveryDate_Model_Resource_Order extends Mage_Core_Model_Resource_Db_Abstract
+class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate_Model_Resource_Core
 {
     /**
      * Set-up table information
@@ -26,13 +26,12 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Mage_Core_Model_Resour
      */
     public function deleteByOrder($iOrderId, $sKey)
     {
+        $sOrderIdWhere = $this->getWhere(self::S_ORDER_ATTRIBUTE, $iOrderId);
+        $sKeyWhere     = $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
+        $sWhere        = $sOrderIdWhere . ' AND ' . $sKeyWhere;
+
         $sTable = $this->getMainTable();
-        $sWhere = $this->_getWriteAdapter()
-                ->quoteInto('order_id = ? AND ', $iOrderId)
-            . $this->_getWriteAdapter()
-                ->quoteInto('`key` = ?', $sKey);
-        $this->_getWriteAdapter()
-            ->delete($sTable, $sWhere);
+        $this->_getWriteAdapter()->delete($sTable, $sWhere);
     }
 
     /**
@@ -45,22 +44,13 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Mage_Core_Model_Resour
     public function getByOrder($iOrderId, $sKey = '')
     {
         $sTable = $this->getMainTable();
-        $sWhere = $this->_getReadAdapter()
-            ->quoteInto('order_id = ?', $iOrderId);
+        $sWhere = $this->getWhere(self::S_ORDER_ATTRIBUTE, $iOrderId);;
         if (!empty($sKey)) {
-            $sWhere .= $this->_getReadAdapter()
-                ->quoteInto(' AND `key` = ? ', $sKey);
+            $sWhere .= ' AND ' . $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
         }
-        $sSql = $this->_getReadAdapter()
-            ->select()
-            ->from($sTable)
-            ->where($sWhere);
-        $aRows = $this->_getReadAdapter()
-            ->fetchAll($sSql);
-        $aReturn = array();
-        foreach ($aRows as $row) {
-            $aReturn[$row['key']] = $row['value'];
-        }
-        return $aReturn;
+
+        $oSql    = $this->getSql($sTable, $sWhere);
+        $aRows   = $this->getRows($oSql);
+        return $this->getFormattedReturn($aRows);
     }
 }

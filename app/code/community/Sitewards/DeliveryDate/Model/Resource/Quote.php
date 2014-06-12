@@ -8,7 +8,7 @@
  * @package     Sitewards_DeliveryDate
  * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
  */
-class Sitewards_DeliveryDate_Model_Resource_Quote extends Mage_Core_Model_Resource_Db_Abstract
+class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate_Model_Resource_Core
 {
     /**
      * Set-up link to the table
@@ -26,9 +26,11 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Mage_Core_Model_Resour
      */
     public function deleteByQuote($iQuoteId, $sKey)
     {
+        $sQuoteIdWhere = $this->getWhere(self::S_QUOTE_ATTRIBUTE, $iQuoteId);
+        $sKeyWhere     = $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
+        $sWhere        = $sQuoteIdWhere . ' AND ' . $sKeyWhere;
+
         $sTable = $this->getMainTable();
-        $sWhere = $this->_getWriteAdapter()->quoteInto('quote_id = ? AND ', $iQuoteId)
-            . $this->_getWriteAdapter()->quoteInto('`key` = ?', $sKey);
         $this->_getWriteAdapter()->delete($sTable, $sWhere);
     }
 
@@ -42,16 +44,13 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Mage_Core_Model_Resour
     public function getByQuote($iQuoteId, $sKey = '')
     {
         $sTable = $this->getMainTable();
-        $sWhere = $this->_getReadAdapter()->quoteInto('quote_id = ?', $iQuoteId);
+        $sWhere = $this->getWhere(self::S_QUOTE_ATTRIBUTE, $iQuoteId);;
         if (!empty($sKey)) {
-            $sWhere .= $this->_getReadAdapter()->quoteInto(' AND `key` = ? ', $sKey);
+            $sWhere .= ' AND ' . $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
         }
-        $sSql = $this->_getReadAdapter()->select()->from($sTable)->where($sWhere);
-        $aRows = $this->_getReadAdapter()->fetchAll($sSql);
-        $aReturn = array();
-        foreach ($aRows as $row) {
-            $aReturn[$row['key']] = $row['value'];
-        }
-        return $aReturn;
+
+        $oSql    = $this->getSql($sTable, $sWhere);
+        $aRows   = $this->getRows($oSql);
+        return $this->getFormattedReturn($aRows);
     }
 }
