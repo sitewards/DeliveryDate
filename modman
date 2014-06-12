@@ -1,6 +1,6 @@
 /app/code/community/Sitewards/DeliveryDate /app/code/community/Sitewards/DeliveryDate
 /app/etc/modules/Sitewards_DeliveryDate.xml /app/etc/modules/Sitewards_DeliveryDate.xml
-/app/locale/de_DE/Sitewards_DeliveryDate.csv /app/locale/de_DE/Sitewards_B2BProfessional.csv
+/app/locale/de_DE/Sitewards_DeliveryDate.csv /app/locale/de_DE/Sitewards_DeliveryDate.csv
 /app/locale/en_US/Sitewards_DeliveryDate.csv /app/locale/en_US/Sitewards_DeliveryDate.csv
 /app/design/frontend/base/default/layout/sitewards/deliverydate.xml /app/design/frontend/base/default/layout/sitewards/deliverydate.xml
 /app/design/frontend/base/default/template/sitewards/deliverydate /app/design/frontend/base/default/template/sitewards/deliverydate
