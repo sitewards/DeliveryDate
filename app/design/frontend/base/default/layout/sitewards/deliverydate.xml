@@ -2,7 +2,8 @@
 <!--
 /**
  * layout.xml
- *  - using the form.additional.info add the new field to the checkout page
+ *  - add the option to the checkout page in the shipping methods additional block,
+ *  - Add the delivery date to all the order and print pages in the customer section
  *
  * @category    Sitewards
  * @package     Sitewards_DeliveryDate

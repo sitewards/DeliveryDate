@@ -34,7 +34,7 @@
 </dl>
 <p class="order-date"><?php echo $this->__('Order Date: %s', $this->formatDate($_order->getCreatedAtStoreDate(), 'long')) ?></p>
 <?php if (Mage::helper('sitewards_deliverydate')->isExtensionActive()) :?>
-    <?if ($_order->getDeliveryDate() !== null): ?>
+    <?php if ($_order->getDeliveryDate() !== null) :?>
         <p class="order-date"><?php echo $this->__('Delivery Date: %s', $this->formatDate($_order->getDeliveryDate(), 'long')) ?></p>
     <?php endif; ?>
 <?php endif; ?>

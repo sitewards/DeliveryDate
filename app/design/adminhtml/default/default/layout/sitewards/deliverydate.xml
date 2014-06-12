@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * layout.xml
+ *  - for the admin section to display the delivery date on orders
+ *
+ * @category    Sitewards
+ * @package     Sitewards_DeliveryDate
+ * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+        <reference name="order_info">
+            <action method="setTemplate">
+                <template>sitewards/deliverydate/sales/order/view/info.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+</layout>

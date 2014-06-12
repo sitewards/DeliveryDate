@@ -40,6 +40,17 @@
                 </setup>
             </deliverydate_setup>
         </resources>
+        <events>
+            <sales_order_load_after>
+                <observers>
+                    <sales_order_load_after>
+                        <type>singleton</type>
+                        <class>sitewards_deliverydate/observer</class>
+                        <method>salesOrderLoadAfter</method>
+                    </sales_order_load_after>
+                </observers>
+            </sales_order_load_after>
+        </events>
     </global>
     <frontend>
         <translate>
@@ -95,17 +106,17 @@
                     </sales_model_service_quote_submit_after>
                 </observers>
             </sales_model_service_quote_submit_after>
-            <sales_order_load_after>
-                <observers>
-                    <sales_order_load_after>
-                        <type>singleton</type>
-                        <class>sitewards_deliverydate/observer</class>
-                        <method>salesOrderLoadAfter</method>
-                    </sales_order_load_after>
-                </observers>
-            </sales_order_load_after>
         </events>
     </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <sitewards_deliverydate>
+                    <file>sitewards/deliverydate.xml</file>
+                </sitewards_deliverydate>
+            </updates>
+        </layout>
+    </adminhtml>
     <default>
         <deliverydate>
             <generalsettings>

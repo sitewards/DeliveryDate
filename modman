@@ -4,4 +4,6 @@
 /app/locale/en_US/Sitewards_DeliveryDate.csv /app/locale/en_US/Sitewards_DeliveryDate.csv
 /app/design/frontend/base/default/layout/sitewards/deliverydate.xml /app/design/frontend/base/default/layout/sitewards/deliverydate.xml
 /app/design/frontend/base/default/template/sitewards/deliverydate /app/design/frontend/base/default/template/sitewards/deliverydate
+/app/design/adminhtml/default/default/layout/sitewards/deliverydate.xml /app/design/adminhtml/default/default/layout/sitewards/deliverydate.xml
+/app/design/adminhtml/default/default/template/sitewards/deliverydate /app/design/adminhtml/default/default/template/sitewards/deliverydate
 /js/sitewards/deliverydate.js /js/sitewards/deliverydate.js
