@@ -8,7 +8,7 @@
  * @package     Sitewards_DeliveryDate
  * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
  */
-class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate_Model_Resource_Core
+class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate_Model_Resource_Abstract
 {
     /**
      * Set-up link to the table
@@ -26,12 +26,8 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate
      */
     public function deleteByQuote($iQuoteId, $sKey)
     {
-        $sQuoteIdWhere = $this->getWhere(self::S_QUOTE_ATTRIBUTE, $iQuoteId);
-        $sKeyWhere     = $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
-        $sWhere        = $sQuoteIdWhere . ' AND ' . $sKeyWhere;
-
         $sTable = $this->getMainTable();
-        $this->_getWriteAdapter()->delete($sTable, $sWhere);
+        $this->deleteItem($sTable, self::S_QUOTE_ATTRIBUTE, $iQuoteId, $sKey);
     }
 
     /**
@@ -44,13 +40,6 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate
     public function getByQuote($iQuoteId, $sKey = '')
     {
         $sTable = $this->getMainTable();
-        $sWhere = $this->getWhere(self::S_QUOTE_ATTRIBUTE, $iQuoteId);;
-        if (!empty($sKey)) {
-            $sWhere .= ' AND ' . $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
-        }
-
-        $oSql    = $this->getSql($sTable, $sWhere);
-        $aRows   = $this->getRows($oSql);
-        return $this->getFormattedReturn($aRows);
+        return $this->getItem($sTable, self::S_QUOTE_ATTRIBUTE, $iQuoteId, $sKey);
     }
 }

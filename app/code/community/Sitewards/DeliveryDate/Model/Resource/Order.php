@@ -8,7 +8,7 @@
  * @package     Sitewards_DeliveryDate
  * @copyright   Copyright (c) 2014 Sitewards GmbH (http://www.sitewards.com/)
  */
-class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate_Model_Resource_Core
+class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate_Model_Resource_Abstract
 {
     /**
      * Set-up table information
@@ -26,12 +26,8 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate
      */
     public function deleteByOrder($iOrderId, $sKey)
     {
-        $sOrderIdWhere = $this->getWhere(self::S_ORDER_ATTRIBUTE, $iOrderId);
-        $sKeyWhere     = $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
-        $sWhere        = $sOrderIdWhere . ' AND ' . $sKeyWhere;
-
         $sTable = $this->getMainTable();
-        $this->_getWriteAdapter()->delete($sTable, $sWhere);
+        $this->deleteItem($sTable, self::S_ORDER_ATTRIBUTE, $iOrderId, $sKey);
     }
 
     /**
@@ -44,13 +40,6 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate
     public function getByOrder($iOrderId, $sKey = '')
     {
         $sTable = $this->getMainTable();
-        $sWhere = $this->getWhere(self::S_ORDER_ATTRIBUTE, $iOrderId);;
-        if (!empty($sKey)) {
-            $sWhere .= ' AND ' . $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
-        }
-
-        $oSql    = $this->getSql($sTable, $sWhere);
-        $aRows   = $this->getRows($oSql);
-        return $this->getFormattedReturn($aRows);
+        return $this->getItem($sTable, self::S_ORDER_ATTRIBUTE, $iOrderId, $sKey);
     }
 }
