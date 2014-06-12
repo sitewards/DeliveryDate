@@ -16,7 +16,10 @@
         <Sitewards_DeliveryDate>
             <active>true</active>
             <codePool>community</codePool>
-            <depends />
+            <depends>
+                <Mage_Checkout/>
+                <Mage_Sales/>
+            </depends>
         </Sitewards_DeliveryDate>
     </modules>
 </config>
