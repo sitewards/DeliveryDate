@@ -29,7 +29,7 @@ abstract class Sitewards_DeliveryDate_Model_Resource_Abstract extends Mage_Core_
      * For a given attribute code and value create a sql safe string
      *
      * @param string $sAttribute
-     * @param mixed $mValue
+     * @param string|int $mValue
      * @return string
      */
     protected function getWhere($sAttribute, $mValue)
@@ -50,24 +50,14 @@ abstract class Sitewards_DeliveryDate_Model_Resource_Abstract extends Mage_Core_
     }
 
     /**
-     * From a sql object fetch all items
+     * Format an array in key => value
      *
      * @param Varien_Db_Select $oSql
-     * @return array
+     * @return string[]
      */
-    public function getRows($oSql)
+    protected function getFormattedReturn($oSql)
     {
-        return $this->_getReadAdapter()->fetchAll($oSql);
-    }
-
-    /**
-     * Format an array in key=> value
-     *
-     * @param array $aRows
-     * @return array
-     */
-    protected function getFormattedReturn($aRows)
-    {
+        $aRows   = $this->_getReadAdapter()->fetchAll($oSql);
         $aReturn = array();
         foreach ($aRows as $row) {
             $aReturn[$row['key']] = $row['value'];
@@ -99,17 +89,16 @@ abstract class Sitewards_DeliveryDate_Model_Resource_Abstract extends Mage_Core_
      * @param string $sAttributeCode
      * @param int $iAttributeValue
      * @param string $sKey
-     * @return array
+     * @return string[]
      */
     public function getItem($sTable, $sAttributeCode, $iAttributeValue, $sKey = '')
     {
-        $sWhere  = $this->getWhere($sAttributeCode, $iAttributeValue);
+        $sWhere = $this->getWhere($sAttributeCode, $iAttributeValue);
         if (!empty($sKey)) {
             $sWhere .= ' AND ' . $this->getWhere(self::S_KEY_ATTRIBUTE, $sKey);
         }
 
-        $oSql    = $this->getSql($sTable, $sWhere);
-        $aRows   = $this->getRows($oSql);
-        return $this->getFormattedReturn($aRows);
+        $oSql = $this->getSql($sTable, $sWhere);
+        return $this->getFormattedReturn($oSql);
     }
 }
