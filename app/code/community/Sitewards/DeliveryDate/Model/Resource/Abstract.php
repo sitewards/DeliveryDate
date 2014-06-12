@@ -34,7 +34,7 @@ abstract class Sitewards_DeliveryDate_Model_Resource_Abstract extends Mage_Core_
      */
     protected function getWhere($sAttribute, $mValue)
     {
-        return $this->_getWriteAdapter()->quoteInto($sAttribute . ' = ?', $mValue);
+        return $this->_getWriteAdapter()->quoteInto('`'.$sAttribute . '` = ?', $mValue);
     }
 
     /**
