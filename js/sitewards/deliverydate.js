@@ -24,7 +24,7 @@ var OrderDatePicker = Class.create(
 
             // initialize the input
             var oDateInput = $('delivery_date');
-            if (oDateInput.value == '') {
+            if (oDateInput.value === '') {
                 var oToday = new Date(),
                     sDay = ('0' + oToday.getDate()).slice(-2),
                     sMonth = ('0' + (oToday.getMonth() + 1)).slice(-2),

@@ -35,7 +35,7 @@ class Sitewards_DeliveryDate_Model_Order extends Mage_Core_Model_Abstract
      *
      * @param int $iOrderId
      * @param string $sKey
-     * @return string
+     * @return array
      */
     public function getByOrder($iOrderId, $sKey = '')
     {
