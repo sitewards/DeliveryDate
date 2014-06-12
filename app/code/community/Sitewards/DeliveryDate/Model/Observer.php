@@ -147,7 +147,7 @@ class Sitewards_DeliveryDate_Model_Observer
     /**
      * Given an array of data and an object set the values
      *
-     * @param array $aData
+     * @param string[] $aData
      * @param Mage_Sales_Model_Order|Mage_Sales_Model_Quote $oModel
      */
     protected function addInformationToObject($aData, $oModel)
