@@ -101,7 +101,6 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesOrderLoadAfter(Varien_Event_Observer $oObserver)
     {
-        die('salesOrderLoadAfter');
         if ($this->isExtensionActive()) {
             $oOrder = $oObserver->getOrder();
 
