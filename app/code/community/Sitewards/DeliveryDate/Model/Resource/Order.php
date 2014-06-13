@@ -24,7 +24,7 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate
      * @param int $iOrderId
      * @param string $sKey
      */
-    public function deleteByOrder($iOrderId, $sKey)
+    public function deleteByObject($iOrderId, $sKey)
     {
         $sTable = $this->getMainTable();
         $this->deleteItem($sTable, self::S_ORDER_ATTRIBUTE, $iOrderId, $sKey);
@@ -37,7 +37,7 @@ class Sitewards_DeliveryDate_Model_Resource_Order extends Sitewards_DeliveryDate
      * @param string $sKey
      * @return string[]
      */
-    public function getByOrder($iOrderId, $sKey = '')
+    public function getByObject($iOrderId, $sKey = '')
     {
         $sTable = $this->getMainTable();
         return $this->getItem($sTable, self::S_ORDER_ATTRIBUTE, $iOrderId, $sKey);

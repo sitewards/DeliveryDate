@@ -25,9 +25,9 @@ class Sitewards_DeliveryDate_Model_Quote extends Mage_Core_Model_Abstract
      * @param int $iQuoteId
      * @param string $sKey
      */
-    public function deleteByQuote($iQuoteId, $sKey)
+    public function deleteByObject($iQuoteId, $sKey)
     {
-        $this->_getResource()->deleteByQuote($iQuoteId, $sKey);
+        $this->_getResource()->deleteByObject($iQuoteId, $sKey);
     }
 
     /**
@@ -37,8 +37,20 @@ class Sitewards_DeliveryDate_Model_Quote extends Mage_Core_Model_Abstract
      * @param string $sKey
      * @return string[]
      */
-    public function getByQuote($iQuoteId, $sKey = '')
+    public function getByObject($iQuoteId, $sKey = '')
     {
-        return $this->_getResource()->getByQuote($iQuoteId, $sKey);
+        return $this->_getResource()->getByObject($iQuoteId, $sKey);
+    }
+
+    /**
+     * Set the quote id from the object id
+     *
+     * @param int $iObjectId
+     * @return $this
+     */
+    public function setObjectId($iObjectId)
+    {
+        $this->setQuoteId($iObjectId);
+        return $this;
     }
 }

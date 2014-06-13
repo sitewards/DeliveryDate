@@ -50,11 +50,7 @@ class Sitewards_DeliveryDate_Model_Observer
 
                 /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
                 $oModel = Mage::getModel('sitewards_deliverydate/quote');
-                $oModel->deleteByQuote($oQuote->getId(), 'delivery_date');
-                $oModel->setQuoteId($oQuote->getId());
-                $oModel->setKey('delivery_date');
-                $oModel->setValue($sDeliveryDate);
-                $oModel->save();
+                $this->saveObject($oModel, $oQuote->getId(), $sDeliveryDate);
             }
         }
     }
@@ -75,12 +71,7 @@ class Sitewards_DeliveryDate_Model_Observer
 
                 /** @var Sitewards_DeliveryDate_Model_Order $oModel */
                 $oModel = Mage::getModel('sitewards_deliverydate/order');
-                $oModel->deleteByOrder($oOrder->getId(), 'delivery_date');
-                $oModel->setOrderId($oOrder->getId());
-                $oModel->setKey('delivery_date');
-                $oModel->setValue($sDeliveryDate);
-                $oOrder->setDeliveryDate($sDeliveryDate);
-                $oModel->save();
+                $this->saveObject($oModel, $oOrder->getId(), $sDeliveryDate);
             }
         }
     }
@@ -98,8 +89,7 @@ class Sitewards_DeliveryDate_Model_Observer
 
             /** @var Sitewards_DeliveryDate_Model_Quote $oModel */
             $oModel = Mage::getModel('sitewards_deliverydate/quote');
-            $aData  = $oModel->getByQuote($oQuote->getId());
-            $this->addInformationToObject($aData, $oQuote);
+            $this->addInformationToObject($oQuote, $oModel);
         }
     }
 
@@ -111,13 +101,13 @@ class Sitewards_DeliveryDate_Model_Observer
      */
     public function salesOrderLoadAfter(Varien_Event_Observer $oObserver)
     {
+        die('salesOrderLoadAfter');
         if ($this->isExtensionActive()) {
             $oOrder = $oObserver->getOrder();
 
             /** @var Sitewards_DeliveryDate_Model_Order $oModel */
             $oModel = Mage::getModel('sitewards_deliverydate/order');
-            $aData  = $oModel->getByOrder($oOrder->getId());
-            $this->addInformationToObject($aData, $oOrder);
+            $this->addInformationToObject($oOrder, $oModel);
         }
     }
 
@@ -145,15 +135,32 @@ class Sitewards_DeliveryDate_Model_Observer
     }
 
     /**
-     * Given an array of data and an object set the values
+     * Given a model and id load the information from the database into this model
      *
-     * @param string[] $aData
-     * @param Mage_Sales_Model_Order|Mage_Sales_Model_Quote $oModel
+     * @param Mage_Sales_Model_Order|Mage_Sales_Model_Quote $oObject
+     * @param Sitewards_DeliveryDate_Model_Quote|Sitewards_DeliveryDate_Model_Order $oModel
      */
-    protected function addInformationToObject($aData, $oModel)
+    protected function addInformationToObject($oObject, $oModel)
     {
+        $aData = $oModel->getByObject($oObject->getId());
         foreach ($aData as $sKey => $sValue) {
-            $oModel->setData($sKey, $sValue);
+            $oObject->setData($sKey, $sValue);
         }
+    }
+
+    /**
+     * From an object delete old values and save options
+     *
+     * @param Sitewards_DeliveryDate_Model_Quote|Sitewards_DeliveryDate_Model_Order $oModel
+     * @param int $iObjectId
+     * @param string $sDeliveryDate
+     */
+    protected function saveObject($oModel, $iObjectId, $sDeliveryDate)
+    {
+        $oModel->deleteByObject($iObjectId, 'delivery_date');
+        $oModel->setObjectId($iObjectId);
+        $oModel->setKey('delivery_date');
+        $oModel->setValue($sDeliveryDate);
+        $oModel->save();
     }
 }

@@ -25,9 +25,9 @@ class Sitewards_DeliveryDate_Model_Order extends Mage_Core_Model_Abstract
      * @param int $iOrderId
      * @param string $sKey
      */
-    public function deleteByOrder($iOrderId, $sKey)
+    public function deleteByObject($iOrderId, $sKey)
     {
-        $this->_getResource()->deleteByOrder($iOrderId, $sKey);
+        $this->_getResource()->deleteByObject($iOrderId, $sKey);
     }
 
     /**
@@ -37,8 +37,20 @@ class Sitewards_DeliveryDate_Model_Order extends Mage_Core_Model_Abstract
      * @param string $sKey
      * @return string[]
      */
-    public function getByOrder($iOrderId, $sKey = '')
+    public function getByObject($iOrderId, $sKey = '')
     {
-        return $this->_getResource()->getByOrder($iOrderId, $sKey);
+        return $this->_getResource()->getByObject($iOrderId, $sKey);
+    }
+
+    /**
+     * Set the order id from the object id
+     *
+     * @param int $iObjectId
+     * @return $this
+     */
+    public function setObjectId($iObjectId)
+    {
+        $this->setOrderId($iObjectId);
+        return $this;
     }
 }

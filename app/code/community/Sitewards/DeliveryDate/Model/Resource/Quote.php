@@ -24,7 +24,7 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate
      * @param int $iQuoteId
      * @param string $sKey
      */
-    public function deleteByQuote($iQuoteId, $sKey)
+    public function deleteByObject($iQuoteId, $sKey)
     {
         $sTable = $this->getMainTable();
         $this->deleteItem($sTable, self::S_QUOTE_ATTRIBUTE, $iQuoteId, $sKey);
@@ -37,7 +37,7 @@ class Sitewards_DeliveryDate_Model_Resource_Quote extends Sitewards_DeliveryDate
      * @param string $sKey
      * @return string[]
      */
-    public function getByQuote($iQuoteId, $sKey = '')
+    public function getByObject($iQuoteId, $sKey = '')
     {
         $sTable = $this->getMainTable();
         return $this->getItem($sTable, self::S_QUOTE_ATTRIBUTE, $iQuoteId, $sKey);
