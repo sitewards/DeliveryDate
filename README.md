@@ -1,6 +1,7 @@
 DeliveryDate
 ============
 
+[![Build Status](https://travis-ci.org/sitewards/DeliveryDate.png?branch=master)](https://travis-ci.org/sitewards/DeliveryDate)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sitewards/DeliveryDate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sitewards/DeliveryDate/?branch=master)
 
 The Sitewards DeliveryDate extension adds an option to the order process to specify a delivery date.
